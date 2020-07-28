@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -20,6 +21,7 @@ namespace Organiser
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
@@ -42,6 +44,7 @@ namespace Organiser
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -56,10 +59,10 @@ namespace Organiser
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
-
+                spa.Options.StartupTimeout = new TimeSpan(0, 3, 0);
                 if (env.IsDevelopment())
                 {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:8080");
                 }
             });
         }
