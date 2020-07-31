@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Database.Entities;
+using Database.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Organiser.Controllers
@@ -9,6 +11,15 @@ namespace Organiser.Controllers
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
+        private readonly IUnitOfWork uow;
+        private readonly IRepository<User> userRepository;
+
+        public SampleDataController(IUnitOfWork uow, IRepository<User> userRepository)
+        {
+            this.uow = uow;
+            this.userRepository = userRepository;
+        }
+        
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -26,6 +37,12 @@ namespace Organiser.Controllers
             });
         }
 
+        [HttpGet]
+        public IEnumerable<User> GetUsers()
+        {
+            return userRepository.Get();
+        }
+        
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }

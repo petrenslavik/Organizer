@@ -1,9 +1,14 @@
 using System;
+using Database;
+using Database.Entities;
+using Database.Interfaces;
+using Database.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +26,9 @@ namespace Organiser
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<OrganizerContext>(options => options.UseSqlServer(connection));
+
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -29,6 +37,9 @@ namespace Organiser
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            services.AddTransient<IRepository<User>, EFGenericRepository<User>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
