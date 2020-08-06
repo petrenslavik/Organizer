@@ -42,7 +42,13 @@ namespace Organiser.Controllers
         {
             return userRepository.Get();
         }
-        
+
+        [HttpGet("[action]")]
+        public User GetUser(int id)
+        {
+            return userRepository.Get(id);
+        }
+
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }
