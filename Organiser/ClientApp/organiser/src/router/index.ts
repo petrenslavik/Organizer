@@ -1,21 +1,27 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Test from '../views/Test.vue'
+import Login from '../views/Login.vue'
+import HelloWorld from '@/components/HelloWorld.vue';
 
 Vue.use(VueRouter)
 
-  const routes: Array<RouteConfig> = [
-  {
-    path: '/test',
-    name: 'Test',
-    component: Test
-  }
+const routes: Array<RouteConfig> = [
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        path: '/HelloWorld',
+        name: 'HelloWorld',
+        component: HelloWorld
+    }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
 })
 
 export default router

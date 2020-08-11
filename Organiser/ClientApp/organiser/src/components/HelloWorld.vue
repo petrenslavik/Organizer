@@ -28,16 +28,16 @@
             <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
             <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
         </ul>
+        <button id="logout" class="btn btn-secondary" v-on:click="logout">Log out</button>
     </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import UserService from '@/api-services/user-service';
-        
-    @Component
-    export default class HelloWorld extends Vue {
-        @Prop() private msg!: string;
+<script>
+    import { Component, Vue } from 'vue-property-decorator';
+    import UserService from '@/api-services/user-service';
+    import AccountService from '@/api-services/account-service';
+
+    export default {
         mounted() {
             UserService.getAll().then((response) => {
                 const responseData = response.data;
@@ -47,24 +47,34 @@ import UserService from '@/api-services/user-service';
                 const responseData = response.data;
                 console.log(responseData);
             })
+        },
+        methods: {
+            logout : function(event) {
+                AccountService.logout();
+                this.$router.push('/login');
+            }
         }
     }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+    h3 {
+        margin: 40px 0 0;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    a {
+        color: #42b983;
+    }
 </style>
