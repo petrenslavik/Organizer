@@ -43,7 +43,7 @@ namespace Organiser.Controllers
             return userRepository.Get();
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("{id}")]
         public User GetUser(int id)
         {
             return userRepository.Get(id);
