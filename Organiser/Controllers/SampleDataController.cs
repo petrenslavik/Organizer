@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Database.Entities;
 using Database.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Organiser.Controllers
