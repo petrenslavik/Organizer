@@ -62,7 +62,7 @@
                 console.log(data);
                 let str = "";
                 for (let property in data.response) {
-                    if (data.response.hasOwnProperty(property) && property != "code") {
+                    if (Object.prototype.hasOwnProperty.call(data.response, property) && property != "code") {
                         str += data.response[property] + '\n';
                     }
                 }

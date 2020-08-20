@@ -1,13 +1,16 @@
-﻿import Axios from 'axios';
+﻿import axios from 'axios';
 
-let baseUrl: string = 'http://localhost:56000/api/sampledata';
+let baseUrl = 'http://127.0.0.1:56000/api/sampledata';
+const api = axios.create();
 
 export default {
-    getAll() {
-        return Axios.get(baseUrl);
-    },
+getAll: function() {
+    axios.defaults.headers.get['Authorization'] = 'Bearer ' + sessionStorage.getItem('TOKEN');
+    return axios.get(baseUrl);
+},
 
-    get(id: number) {
-        return Axios.get(baseUrl + `/getuser/?id=${id}`);
-    }
+get: function(id) {
+    api.defaults.headers.get['Authorization'] = 'Bearer ' + sessionStorage.getItem('TOKEN');
+    return axios.get(baseUrl + `/getuser/?id=${id}`);
+}
 };
