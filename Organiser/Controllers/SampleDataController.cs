@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Organiser.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class SampleDataController : Controller
     {
         private readonly IUnitOfWork uow;
@@ -20,7 +22,7 @@ namespace Organiser.Controllers
             this.uow = uow;
             this.userRepository = userRepository;
         }
-        
+
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"

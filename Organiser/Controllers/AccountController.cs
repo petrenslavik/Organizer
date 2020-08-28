@@ -9,6 +9,7 @@ using Database.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace Organiser.Controllers
 {
@@ -25,12 +26,14 @@ namespace Organiser.Controllers
         }
 
         [HttpPost("token")]
-        public IActionResult Token([FromForm] User model)
+        public async Task Token([FromForm] User model)
         {
             var identity = GetIdentity(model.Username, model.PasswordHash);
             if (identity == null)
             {
-                return BadRequest(new { errorText = "Invalid username or password." + model.Username + model.PasswordHash});
+                Response.StatusCode = 400;
+                await Response.WriteAsync("Invalid username or password.");
+                return;
             }
 
             var now = DateTime.UtcNow;
@@ -47,10 +50,11 @@ namespace Organiser.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                username = identity.Name
+                user = new User { Username = model.Username, PasswordHash = model.PasswordHash }
             };
 
-            return Json(response);
+            Response.ContentType = "application/json";
+            await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
 
         private ClaimsIdentity GetIdentity(string username, string password)

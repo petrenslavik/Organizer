@@ -37,8 +37,6 @@
 </template>
 
 <script>
-    import AccountService from '@/api-services/account-service';
-
     export default {
         name: "Login",
         data: function () {
@@ -51,19 +49,19 @@
         methods: {
             login: function (event) {
                 let formData = new FormData(event.target);
-                AccountService.login(formData).then(() => this.successfulLogin())
-                    .catch((error) => this.unsuccessfulLogin(error));               
+                this.$store.dispatch("account/Login", formData, { root: true })
+                    .then(() => this.successfulLogin())
+                    .catch((error) => this.unsuccessfulLogin(error));
             },
             successfulLogin: function () {
                 this.errorMessage = null;
                 this.$router.push("/HelloWorld");
             },
             unsuccessfulLogin: function (data) {
-                console.log(data);
                 let str = "";
                 for (let property in data.response) {
                     if (Object.prototype.hasOwnProperty.call(data.response, property) && property != "code") {
-                        str += data.response[property] + '\n';
+                        str += data.reponse[property] + '\n';
                     }
                 }
                 this.errorMessage = str;
@@ -74,6 +72,8 @@
 
 <style scoped>
     .container {
+        padding-top: 100px;
+        padding-bottom: 100px;
         display: flex;
         flex-direction: column;
         justify-content: center;

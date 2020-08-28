@@ -1,16 +1,19 @@
 ﻿import axios from 'axios';
+import account from '@/stores/account'
 
-let baseUrl = 'http://127.0.0.1:56000/api/sampledata';
+let baseUrl = '/api/sampledata';
+
 const api = axios.create();
 
-export default {
-getAll: function() {
-    axios.defaults.headers.get['Authorization'] = 'Bearer ' + sessionStorage.getItem('TOKEN');
-    return axios.get(baseUrl);
-},
+axios.defaults.headers.common['Authorization'] = "Bearer " + account.state.token;
+api.defaults.headers.common['Authorization'] = "Bearer " + account.state.token;
 
-get: function(id) {
-    api.defaults.headers.get['Authorization'] = 'Bearer ' + sessionStorage.getItem('TOKEN');
-    return axios.get(baseUrl + `/getuser/?id=${id}`);
-}
+export default {
+    getAll: function () {
+        return axios.get(baseUrl);
+    },
+
+    get: function (id) {
+        return axios.get(baseUrl + `/getuser/?id=${id}`);
+    }
 };
