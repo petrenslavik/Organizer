@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Organiser.Models;
 
 namespace Organiser.Controllers
 {
@@ -26,9 +27,9 @@ namespace Organiser.Controllers
         }
 
         [HttpPost("token")]
-        public async Task Token([FromForm] User model)
+        public async Task Token([FromForm] UserLoginViewModel model)
         {
-            var identity = GetIdentity(model.Username, model.PasswordHash);
+            var identity = GetIdentity(model.Login, model.Password);
             if (identity == null)
             {
                 Response.StatusCode = 400;
@@ -50,7 +51,7 @@ namespace Organiser.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                user = new User { Username = model.Username, PasswordHash = model.PasswordHash }
+                user = new User { Username = model.Login, PasswordHash = model.Password }
             };
 
             Response.ContentType = "application/json";

@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Database.Entities;
 using Database.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Organiser.Controllers
 {
@@ -41,9 +43,15 @@ namespace Organiser.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<User> GetUsers()
+        public async Task GetUsers()
         {
-            return userRepository.Get();
+            var response = new
+            {
+                users = userRepository.Get()
+            };
+
+            Response.ContentType = "application/json";
+            await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
 
         [HttpGet("{id}")]

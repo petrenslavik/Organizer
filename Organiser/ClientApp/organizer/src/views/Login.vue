@@ -5,13 +5,13 @@
             <div class="card-body">
                 <form novalidate @submit.prevent="login">
                     <div class="input-group mb-3">
-                        <input name="Username" required type="email" class="form-control" placeholder="Email..." v-model="Username">
+                        <input name="Login" required type="email" class="form-control" placeholder="Email..." v-model="Login">
                         <div class="invalid-feedback">
                             Please enter a valid email.
                         </div>
                     </div>
                     <div class="form-group">
-                        <input name="PasswordHash" required type="password" class="form-control" placeholder="Password..." v-model="PasswordHash" >
+                        <input name="Password" required type="password" class="form-control" placeholder="Password..." v-model="Password" >
                         <div class="invalid-feedback">
                             Password should contain at least 8 symbols.
                         </div>
@@ -41,8 +41,8 @@
         name: "Login",
         data: function () {
             return {
-                Username: null,
-                PasswordHash: null,
+                Login: null,
+                Password: null,
                 errorMessage: null,
             }
         },
@@ -57,14 +57,8 @@
                 this.errorMessage = null;
                 this.$router.push("/HelloWorld");
             },
-            unsuccessfulLogin: function (data) {
-                let str = "";
-                for (let property in data.response) {
-                    if (Object.prototype.hasOwnProperty.call(data.response, property) && property != "code") {
-                        str += data.reponse[property] + '\n';
-                    }
-                }
-                this.errorMessage = str;
+            unsuccessfulLogin: function (error) {                
+                this.errorMessage = error.response.data;
             }
         }
     }

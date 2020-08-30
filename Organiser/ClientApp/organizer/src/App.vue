@@ -35,7 +35,7 @@
                     <input class="form-control mr-sm-2" type="text" placeholder="Search">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                 </form>
-                <button class="btn btn-secondary my-2 my-sm-0 ml-2" v-on:click="$router.push('Login')">Login</button>
+                <button v-if="!isAuthenticated" class="btn btn-secondary my-2 my-sm-0 ml-2" v-on:click="$router.push('Login')">Login</button>
                 <form  class="form-inline my-2 my-lg-0 ml-2" v-if="isAuthenticated" novalidate @submit.prevent="logout">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Logout</button>
                 </form>
@@ -65,7 +65,7 @@
             },
             successfulLogout: function () {
                 this.errorMessage = null;
-                this.$router.push("/Login");
+                this.$router.push("/login");
             },
             unsuccessfulLogout: function (data) {
                 let str = "";

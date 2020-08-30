@@ -21,7 +21,10 @@ const routes = [
     {
         path: '/helloWorld',
         name: 'HelloWorld',
-        component: HelloWorld
+        component: HelloWorld,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/about',
@@ -43,11 +46,9 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!store.getters['account/isAuthenticated']) {
-            console.log("heere");
-            console.log(store);
             next({
-                path: '/login',
-                query: { redirect: to.fullPath }
+                path: '/login'
+                //query: { redirect: to.fullPath }
             })
         }
         else {
