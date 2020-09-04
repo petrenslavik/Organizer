@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Organiser.Managers;
 
 namespace Organiser
 {
@@ -43,7 +44,9 @@ namespace Organiser
                 configuration.RootPath = "ClientApp/build";
             });
 
+            services.AddSingleton<EmailManager>();
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            services.AddScoped<UserManager>();
             services.AddTransient<IRepository<User>, EFGenericRepository<User>>();
 
             services.AddAuthorization(options =>

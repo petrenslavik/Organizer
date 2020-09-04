@@ -66,7 +66,7 @@ namespace Database.Repositories
             dbSet.Add(entity);
         }
 
-        public void Update(TEntity entityToUpdate)
+        public virtual void Update(TEntity entityToUpdate)
         {
             dbSet.Attach(entityToUpdate);
             dbContext.Entry(entityToUpdate).State = EntityState.Modified;

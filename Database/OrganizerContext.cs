@@ -14,13 +14,13 @@ namespace Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasData(
-                new User[]
-                {
-                new User { Id = 1, Username = "Tom", PasswordHash = "123" },
-                    new User { Id = 2, Username = "Alice", PasswordHash = "26" },
-                    new User { Id = 3, Username = "Sam", PasswordHash = "28" }
-                 });
+            //modelBuilder.Entity<User>().HasData(
+            //    new User[]
+            //    {
+            //    new User { Id = 1, Username = "Tom", PasswordHash = "123" },
+            //        new User { Id = 2, Username = "Alice", PasswordHash = "26" },
+            //        new User { Id = 3, Username = "Sam", PasswordHash = "28" }
+            //     });
         }
     }
 }

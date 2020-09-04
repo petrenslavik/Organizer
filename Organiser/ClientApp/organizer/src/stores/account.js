@@ -47,7 +47,9 @@ const actions = {
         return api.post("/api/account/register", payload);
     },
     ConfirmRegistration: async (context, payload) => {
-        return api.get("/api/account/confirmRegistration?token=" + payload);
+        console.log(payload);
+        console.log(payload.username);
+        return api.get("/api/account/confirmRegistration?username=" + payload.username + "&token=" + payload.token);
     }
 };
 

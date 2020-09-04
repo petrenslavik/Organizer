@@ -36,7 +36,8 @@
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                 </form>
                 <button v-if="!isAuthenticated" class="btn btn-secondary my-2 my-sm-0 ml-2" v-on:click="$router.push('Login')">Login</button>
-                <form  class="form-inline my-2 my-lg-0 ml-2" v-if="isAuthenticated" novalidate @submit.prevent="logout">
+                <button v-if="!isAuthenticated" class="btn btn-secondary my-2 my-sm-0 ml-2" v-on:click="$router.push('Register')">Register</button>
+                <form class="form-inline my-2 my-lg-0 ml-2" v-if="isAuthenticated" novalidate @submit.prevent="logout">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Logout</button>
                 </form>
             </div>

@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import HelloWorld from '../components/HelloWorld.vue'
+import Register from '../views/Register.vue'
+import RegisterConfirmationInfo from '../views/RegisterConfirmationInfo.vue'
+import EmailConfirmation from '../views/EmailConfirmation.vue'
 import { store } from '@/stores/store';
 
 Vue.use(VueRouter)
@@ -17,6 +20,20 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: Login
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: Register
+    },
+    {
+        path: '/registerConfirmationInfo',
+        name: 'RegisterConfirmationInfo',
+        component: RegisterConfirmationInfo
+    }, {
+        path: '/emailConfirmation',
+        name: 'EmailConfirmation',
+        component: EmailConfirmation
     },
     {
         path: '/helloWorld',
